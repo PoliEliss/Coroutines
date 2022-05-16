@@ -3,6 +3,8 @@ package com.rorono.coroutines
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.rorono.coroutines.databinding.ActivityMainBinding
@@ -14,12 +16,14 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        loadData()
+        binding.buttonDownload.setOnClickListener {
+            loadData()
+        }
+
     }
 
     private fun loadData() {
@@ -38,27 +42,25 @@ class MainActivity : AppCompatActivity() {
     private fun loadCity(callback: (String) -> Unit) {
         thread {
             Thread.sleep(5000)
-            handler.post {
+            runOnUiThread {
                 callback.invoke("Moskov4")
             }
-
         }
     }
 
     private fun loadTemperature(city: String, callback: (Int) -> Unit) {
         thread {
-            handler.post {
+            runOnUiThread {
                 Toast.makeText(
                     this,
                     "Loading temperature for city: ${city}", Toast.LENGTH_LONG
                 ).show()
             }
             Thread.sleep(5000)
-            handler.post {
-                callback.invoke(17)
-            }
+            runOnUiThread { callback.invoke(17) }
         }
     }
 }
+
 
 

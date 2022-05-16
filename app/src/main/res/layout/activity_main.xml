@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@id/tv_location_temperature_label" />
     <ProgressBar
         android:id="@+id/progressBar"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tv_temperature"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
